@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pomo"
+version = "0.1.0"
+description = "Tiny pomodoro CLI"
+requires-python = ">=3.10"
+
+dependencies = [
+  "inquirerpy==0.3.4",
+  "markdown-it-py==4.0.0",
+  "mdurl==0.1.2",
+  "pfzy==0.3.4",
+  "prompt_toolkit==3.0.52",
+  "Pygments==2.19.2",
+  "rich==14.3.2",
+  "wcwidth==0.6.0",
+]
+
+[project.scripts]
+pomo = "main:main"
+
+[tool.setuptools]
+py-modules = ["main"]
