@@ -115,6 +115,7 @@ def main() -> int:
             except KeyboardInterrupt:
                 return
         else:
+            clear()
             sys.exit()
         console.print()
 
