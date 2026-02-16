@@ -7,6 +7,7 @@ A simple pomodoro timer CLI for macOS currently
 If you havent already:
 
 `brew install pipx`
+
 `pipx ensurepath`
 
 Then clone the repo with:
