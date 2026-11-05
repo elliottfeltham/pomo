@@ -1,6 +1,7 @@
 import time
 import sys
-import os
+import subprocess
+from pathlib import Path
 from rich.console import Console
 from InquirerPy import inquirer
 from InquirerPy import get_style
@@ -33,10 +34,10 @@ style = get_style(
 
 
 def clear():
-    os.system("tput reset")
+    console.clear()
 
 
-def print_menu() -> None:
+def print_menu() -> str:
     clear()
     console.rule("[bold]" + f"[{GREEN}]POMO[/{GREEN}]", style=f"{RED}")
     print()
@@ -52,12 +53,28 @@ def print_menu() -> None:
 
 
 def notify(message: str) -> None:
+    if sys.platform != "darwin":
+        return
+
     title = "Pomo"
-    # this can be the path to any mp3, wav, aiff etc.
-    sound = "afplay /System/Library/Sounds/Ping.aiff &"
-    os.system(sound)
-    command = f'display dialog "{message}" with title "{title}" buttons {{"OK"}} default button "OK" giving up after 5'
-    os.system(f"osascript -e '{command}' >/dev/null 2>&1")
+    sound = Path("/System/Library/Sounds/Ping.aiff")
+    if sound.exists():
+        subprocess.Popen(
+            ["afplay", str(sound)],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+    script = (
+        f'display dialog "{message}" with title "{title}" '
+        'buttons {"OK"} default button "OK" giving up after 5'
+    )
+    subprocess.run(
+        ["osascript", "-e", script],
+        check=False,
+        timeout=6,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
 
 
 def format_mm_ss(total_seconds: int) -> str:
@@ -102,7 +119,7 @@ def main() -> int:
         try:
             choice = print_menu()
         except (EOFError, KeyboardInterrupt):
-            sys.exit()
+            return 0
 
         if choice == "25/5":
             run_work_then_break(SHORT, REST)
@@ -116,9 +133,9 @@ def main() -> int:
                 return
         else:
             clear()
-            sys.exit()
+            return 0
         console.print()
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

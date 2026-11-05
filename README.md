@@ -1,28 +1,59 @@
-# pomo
+# Pomo
 
-A simple pomodoro timer CLI for macOS currently
+A focused Pomodoro timer for the terminal, built with Python, Rich, and
+InquirerPy. It provides 25/5 and 50/10 work cycles plus a standalone long-break
+timer, with macOS sound and dialog notifications when a phase completes.
 
-## How to use
+## Features
 
-If you havent already:
+- Interactive terminal menu
+- 25-minute and 50-minute focus modes
+- Short and long break timers
+- Keyboard interruption that safely returns to the menu
+- Native macOS completion sound and timed dialog
+- Installable `pomo` command through `pipx`
 
-`brew install pipx`
+## Installation
 
-`pipx ensurepath`
+Requirements: Python 3.10 or later and macOS for native notifications.
 
-Then clone the repo with:
+```bash
+brew install pipx
+pipx ensurepath
+git clone https://github.com/elliottfeltham/pomo.git
+cd pomo
+pipx install .
+```
 
-`git clone https://github.com/elliottfeltham/pomo.git`
+For editable development installs, use `pipx install -e .`.
 
-Once you have the repo downloaded, navigate to the repo root with `cd pomo` and run:
+## Usage
 
-`pipx install -e .`
+```bash
+pomo
+```
 
-Now you're done! You can run `pomo` from any terminal and it will run the pomodoro CLI.
-Any changes you make to the repo will automatically be present when the CLI is ran.
-Pressing crtl+c at anytime will either take you back to the menu or quit the app.
+Choose a timer mode with the arrow keys. Press `Ctrl+C` during a timer to
+return to the menu, or at the menu to exit.
 
-## Requirements
+## Development and tests
 
-- Python 3.10+
-- macOS
+```bash
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install -e .
+python -m unittest discover -s tests -v
+```
+
+GitHub Actions runs the tests on every push and pull request to `main`.
+
+## Limitations
+
+- Native sound and dialog notifications are macOS-specific. The timer logic can
+  run elsewhere, but desktop notifications are intentionally skipped.
+- Sessions are not persisted and there is no historical productivity tracking.
+- The terminal must remain active for the timer process to continue.
+
+## License
+
+Released under the [MIT License](LICENSE).
