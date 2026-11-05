@@ -36,24 +36,17 @@ pomo
 Choose a timer mode with the arrow keys. Press `Ctrl+C` during a timer to
 return to the menu, or at the menu to exit.
 
-## Development and tests
+## Development
 
 ```bash
 python -m venv .venv
 source .venv/bin/activate
 python -m pip install -e .
-python -m unittest discover -s tests -v
 ```
-
-GitHub Actions runs the tests on every push and pull request to `main`.
 
 ## Limitations
 
-- Native sound and dialog notifications are macOS-specific. The timer logic can
-  run elsewhere, but desktop notifications are intentionally skipped.
+- The application is designed for macOS; its sound and dialog commands are
+  platform-specific.
 - Sessions are not persisted and there is no historical productivity tracking.
 - The terminal must remain active for the timer process to continue.
-
-## License
-
-Released under the [MIT License](LICENSE).
